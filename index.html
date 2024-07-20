@@ -29,10 +29,24 @@
             color: white;
             border: none;
             cursor: pointer;
+            margin-right: 10px;
             margin-bottom: 10px;
         }
         button:hover {
             background-color: #45a049;
+        }
+        .copy-button {
+            background-color: #008CBA;
+        }
+        .copy-button:hover {
+            background-color: #007B9A;
+        }
+        .result-container {
+            display: flex;
+            align-items: center;
+        }
+        #latinOutput, #cyrillicOutput {
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -44,14 +58,20 @@
             <textarea id="cyrillicInput" placeholder="Enter Russian text here (in Cyrillic)"></textarea>
             <button onclick="transliterateCyrillicToLatin()">Transliterate to Latin</button>
             <h3>Result:</h3>
-            <p id="latinOutput"></p>
+            <div class="result-container">
+                <p id="latinOutput"></p>
+                <button onclick="copyToClipboard('latinOutput')" class="copy-button">Copy</button>
+            </div>
         </div>
         <div class="column">
             <h2>Latin to Cyrillic</h2>
             <textarea id="latinInput" placeholder="Enter transliterated text here (in Latin)"></textarea>
             <button onclick="transliterateLatinToCyrillic()">Transliterate to Cyrillic</button>
             <h3>Result:</h3>
-            <p id="cyrillicOutput"></p>
+            <div class="result-container">
+                <p id="cyrillicOutput"></p>
+                <button onclick="copyToClipboard('cyrillicOutput')" class="copy-button">Copy</button>
+            </div>
         </div>
     </div>
 
@@ -98,6 +118,15 @@
             }
 
             document.getElementById('cyrillicOutput').textContent = output;
+        }
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
         }
     </script>
 </body>
